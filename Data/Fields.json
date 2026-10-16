@@ -1,0 +1,29 @@
+[
+    {
+        "id": "S01",
+        "name": "Sân 5A",
+        "type": "Sân 5",
+        "pricePerHour": 200000,
+        "status": "Trống",
+        "createdAt": "2026-10-13T08:00:00",
+        "updatedAt": "2026-10-13T08:00:00"
+    },
+    {
+        "id": "S02",
+        "name": "Sân 5B",
+        "type": "Sân 5",
+        "pricePerHour": 200000,
+        "status": "Đang có khách",
+        "createdAt": "2026-10-13T08:00:00",
+        "updatedAt": "2026-10-13T08:00:00"
+    },
+    {
+        "id": "S03",
+        "name": "Sân 7A",
+        "type": "Sân 7",
+        "pricePerHour": 350000,
+        "status": "Trống",
+        "createdAt": "2026-10-13T08:00:00",
+        "updatedAt": "2026-10-13T08:00:00"
+    }
+]
