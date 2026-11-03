@@ -1,4 +1,4 @@
-#include "payment_manager.h"
+#include "PaymentManager.h"
 
 // get all paid booking ids
 QSet<QString> PaymentManager::getPaidBookingIds() {
@@ -85,6 +85,7 @@ Payments PaymentManager::pay(Bookings booking, double surcharge) {
     p.booking_id = booking.booking_id;
     p.customer_name = booking.customer_name;
     p.field_name = booking.field_name;
+    p.booking_date = booking.booking_date;
     p.duration_hours = info.duration_hours;
     p.price_per_hour = info.price_per_hour;
     p.rental_fee = info.rental_fee;

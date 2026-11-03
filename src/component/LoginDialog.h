@@ -12,15 +12,17 @@ class LoginDialog : public QDialog {
 private:
     QLineEdit* txtUsername;
     QLineEdit* txtPassword;
+    QPushButton* btnTogglePass;
     QPushButton* btnLogin;
     QLabel* lblStatus;
     AuthManager* m_authManager;
 
 private slots:
     void handleLogin();
+    void togglePasswordVisibility();
 
 public:
-    LoginDialog(AuthManager* authManager, QWidget* parent = nullptr);
+    explicit LoginDialog(AuthManager* authManager, QWidget* parent = nullptr);
 };
 
 #endif // LOGINDIALOG_H

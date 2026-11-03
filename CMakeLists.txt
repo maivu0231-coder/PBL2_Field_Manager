@@ -1,43 +1,88 @@
 cmake_minimum_required(VERSION 3.16)
+
 project(FieldsManagerQt VERSION 1.0 LANGUAGES CXX)
 
-# Thiết lập chuẩn C++17
+# C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Tự động hóa các công cụ của Qt
+# Qt settings
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-# Tìm thư viện Qt6 (hoặc thay bằng Qt5 nếu bạn dùng Qt5)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+# Find Qt6
+find_package(Qt6 REQUIRED COMPONENTS Widgets Charts)
 
-# Liệt kê tất cả các file nguồn dựa theo cấu trúc thư mục src/ của bạn
+# Source files
 set(SOURCES
-    src/main.cpp
-    # Thêm các file Core
+    # Main
+    main.cpp
+
+    # Core
+    src/core/AuthManger.cpp
+    src/core/BookingManager.cpp
+    src/core/FieldManager.cpp
+    src/core/PaymentManager.cpp
+    src/core/StatisticsManager.cpp
+
+    # UI components
+    src/component/LoginDialog.cpp
+    src/component/MainWindow.cpp
+    src/component/TabBooking.cpp
+    src/component/TabField.cpp
+    src/component/TabPayment.cpp
+    src/component/TabStatistics.cpp
+    src/component/TabAccount.cpp
+    src/component/ReceiptDialog.cpp
+)
+
+# Header files
+set(HEADERS
+    # Core
+    src/core/AuthManager.h
     src/core/BookingManager.h
     src/core/FieldManager.h
     src/core/PaymentManager.h
-    # Thêm các file Component (UI)
+    src/core/StatisticsManager.h
+
+    # UI components
+    src/component/LoginDialog.h
     src/component/MainWindow.h
     src/component/TabBooking.h
     src/component/TabField.h
     src/component/TabPayment.h
-    # Thêm các file Storage & Models (bạn liệt kê các file .h/.cpp thực tế tại đây)
+    src/component/TabStatistics.h
+    src/component/TabAccount.h
+    src/component/ReceiptDialog.h
+
+    # Models
+    src/models/Base.h
+    src/models/Bookings.h
+    src/models/Fields.h
+    src/models/Payments.h
+    src/models/User.h
+
+    # Storage
     src/storage/HashTable.h
     src/storage/JsonHandler.h
     src/storage/Repositories.h
 )
 
-# Tạo file thực thi ứng dụng
-add_executable(FieldsManagerQt ${SOURCES})
+# Create executable
+add_executable(${PROJECT_NAME}
+    ${SOURCES}
+    ${HEADERS}
+)
 
-# Liên kết thư viện Qt Widgets vào chương trình
-target_link_libraries(FieldsManagerQt PRIVATE Qt6::Widgets)
-# Tìm kiếm các module cần thiết của Qt6 (thêm Charts vào đây)
-find_package(Qt6 REQUIRED COMPONENTS Widgets Charts)
+# Include directories
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
-# Liên kết thư viện Charts vào file thực thi của bạn
-target_link_libraries(FieldsManagerQt PRIVATE Qt6::Widgets Qt6::Charts)
+# Link Qt libraries
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Widgets
+    Qt6::Charts
+)

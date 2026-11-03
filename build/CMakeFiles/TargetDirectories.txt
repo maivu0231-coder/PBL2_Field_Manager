@@ -1,0 +1,5 @@
+D:/C++Programming/Fields_Manager_Project/build/CMakeFiles/FieldsManagerQt.dir
+D:/C++Programming/Fields_Manager_Project/build/CMakeFiles/edit_cache.dir
+D:/C++Programming/Fields_Manager_Project/build/CMakeFiles/rebuild_cache.dir
+D:/C++Programming/Fields_Manager_Project/build/CMakeFiles/FieldsManagerQt_autogen_timestamp_deps.dir
+D:/C++Programming/Fields_Manager_Project/build/CMakeFiles/FieldsManagerQt_autogen.dir

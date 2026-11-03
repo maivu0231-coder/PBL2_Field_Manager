@@ -24,9 +24,11 @@ public:
 
     // get all fields:we use std::vector instead of QVector because QVector is not compatible with std::sort
     std::vector<Fields> getAllFields() const;
+    std::vector<Fields> getAll() const { return getAllFields(); }
 
     // get field by id
     std::optional<Fields> getFieldById(const QString &field_id) const;
+    std::optional<Fields> getById(const QString &field_id) const { return getFieldById(field_id); }
 
     // filter fields by status, type and search term,search term: search by name or field_id, case insensitive, accent insensitive
     std::vector<Fields> filter(const QString& status, const QString& fieldType, const QString& searchTerm);

@@ -1,0 +1,12 @@
+    HÓA ĐƠN INV09    
+Mã đơn    : BK10
+Khách     : mai xuân vũ
+Sân       : Sân5A
+Thời lượng: 1.5 h
+Đơn giá   : 100 đ/h
+Tiền thuê : 150 đ
+Phụ phí   : 10,000 đ
+Tiền cọc  : -0 đ
+------------------------------
+TỔNG TIỀN : 10,150 đ
+Thời điểm : 2026-11-03 16:01:44

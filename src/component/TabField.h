@@ -14,12 +14,14 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QMessageBox>
-#include "Src/Core/FieldManager.h"
+
+#include "../core/FieldManager.h"
 
 class TabField : public QWidget {
     Q_OBJECT
+
 private:
-    FieldService* service;
+    FieldManager* service;
 
     QLabel* lblTotal;
     QLabel* lblAvail;
@@ -31,14 +33,14 @@ private:
     QComboBox* cboFilterType;
     QTableWidget* tableFields;
 
-    // update form
+    // Update form
     QComboBox* cboEditCode;
     QLineEdit* txtEditName;
     QComboBox* cboEditType;
     QSpinBox* spnEditPrice;
     QComboBox* cboEditStatus;
 
-    // add and delete form
+    // Add and delete form
     QLineEdit* txtAddCode;
     QLineEdit* txtAddName;
     QComboBox* cboAddType;
@@ -49,7 +51,7 @@ private:
     void setupUi();
 
 public:
-    explicit TabField(FieldService* srv, QWidget* parent = nullptr);
+    explicit TabField(FieldManager* srv, QWidget* parent = nullptr);
 
 signals:
     void dataChanged();
@@ -62,7 +64,6 @@ private slots:
     void onUpdateField();
     void onAddField();
     void onDeleteField();
-    void onResetDefault();
 };
 
 #endif // TABFIELD_H

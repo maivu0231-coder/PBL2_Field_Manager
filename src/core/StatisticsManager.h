@@ -14,10 +14,10 @@ private:
 public:
     StatisticsManager(PaymentManager* paymentManager, BookingManager* bookingManager);
 
-    //get revenue by date, return a QMap with key is date in format "yyyy-MM-dd" and value is total revenue of that date
-    QMap<QString, double> getRevenueByDate() const;
+    // get revenue by date: byBookingDate = true means group by booking date (default), false means by payment transaction date
+    QMap<QString, double> getRevenueByDate(bool byBookingDate = true) const;
 
-    //get peak hours, return a QMap with key is hour in format "HH" and value is number of bookings in that hour
+    // get peak hours, return a QMap with key is hour in format "HH" and value is number of bookings in that hour
     QMap<QString, int> getPeakHours() const;
 };
 

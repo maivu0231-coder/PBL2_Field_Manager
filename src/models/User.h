@@ -3,9 +3,9 @@
 #include<QString>
 class User{
     private:
-        QString username;
-        QString password;
-        QString role;
+        QString m_username;
+        QString m_password;
+        QString m_role;
     public:
         //constructor
         User() : m_username(""), m_password(""), m_role("Cashier") {}

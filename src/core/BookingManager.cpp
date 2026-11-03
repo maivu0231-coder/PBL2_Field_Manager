@@ -1,4 +1,4 @@
-#include "booking_manager.h"
+#include "BookingManager.h"
 
 QString BookingManager::nextBookingId() {
     int maxNum = 0;
@@ -45,7 +45,7 @@ Bookings BookingManager::createBooking(
     }
     QRegularExpression phoneRe("^0\\d{9}$");
     if (!phoneRe.match(cleanPhone).hasMatch()) {
-        throw BookingError("Số điện thoại cần có 10 chữ số và bắt đầu bằng số 0.");
+        throw BookingError("Số điện thoại cần có 10 chữ số và bắt đầu bằng số 0 (VD: 0905123456).");
     }
     if (startTime >= endTime) {
         throw BookingError("Giờ kết thúc phải lớn hơn giờ bắt đầu.");
@@ -54,7 +54,7 @@ Bookings BookingManager::createBooking(
         throw BookingError("Sân chỉ hoạt động từ 06:00 đến 22:00.");
     }
     if (QDateTime(bookingDate, startTime) < QDateTime::currentDateTime()) {
-        throw BookingError("Không thể đặt sân trong quá khứ.");
+        throw BookingError("Không thể đặt sân trong quá khứ. Vui lòng chọn ngày và giờ trong tương lai.");
     }
     if (deposit < 0) {
         throw BookingError("Tiền cọc không được là số âm.");
@@ -62,17 +62,18 @@ Bookings BookingManager::createBooking(
 
     auto fieldOpt = fieldRepository.getById(fieldId); // get field by id
     if (!fieldOpt.has_value()) {
-        throw BookingError("Không tìm thấy sân đã chọn.");
+        throw BookingError("Không tìm thấy sân đã chọn. Vui lòng chọn lại sân bóng.");
     }
     Fields field = fieldOpt.value(); // copy the field object
-    if (field.status.trimmed().compare("Bảo trì", Qt::CaseInsensitive) == 0) // chekc if the field is under maintenance return false and message
+    if (field.status.trimmed().compare("Bảo trì", Qt::CaseInsensitive) == 0 ||
+        field.status.trimmed().compare("Maintenance", Qt::CaseInsensitive) == 0) // check if the field is under maintenance
     {
         throw BookingError("Sân đang bảo trì, không thể nhận đặt sân.");
     }
 
     double durationHours = startTime.secsTo(endTime) / 3600.0; // duration hours=(endTime-startTime)/3600
     double estimatedFee = durationHours * field.price_per_hour;
-    if (deposit > estimatedFee) // check if deposit large than estimated fee
+    if (estimatedFee > 0 && deposit > estimatedFee) // check if deposit larger than estimated fee
     {
         throw BookingError(QString("Tiền cọc (%L1 đ) không được vượt quá tiền thuê dự kiến (%L2 đ).")
                             .arg(deposit, 0, 'f', 0)
@@ -81,6 +82,10 @@ Bookings BookingManager::createBooking(
     
     // check for booking conflicts with existing bookings for the same field and date
     for (const auto& existing : listBookings(bookingDate, fieldId)) {
+        // Bỏ qua các đơn đã hủy
+        if (existing.status.trimmed().compare("Đã hủy", Qt::CaseInsensitive) == 0) {
+            continue;
+        }
         QTime exStart = QTime::fromString(existing.start_time, "HH:mm");
         QTime exEnd = QTime::fromString(existing.end_time, "HH:mm");
         if (startTime < exEnd && endTime > exStart) {
@@ -89,7 +94,7 @@ Bookings BookingManager::createBooking(
         }
     }
     
-    // inilize booking object 
+    // initialize booking object 
     Bookings b;
     b.booking_id = nextBookingId();
     b.field_id = field.field_id;
@@ -104,7 +109,7 @@ Bookings BookingManager::createBooking(
     b.price_per_hour = field.price_per_hour;
 
     if (!bookingRepository.add(b)) {
-        throw BookingError("Không thể lưu đơn đặt sân. Vui lòng thử lại.");
+        throw BookingError("Không thể lưu đơn đặt sân vào hệ thống. Vui lòng thử lại.");
     }
     return b;
 }
